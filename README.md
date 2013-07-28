@@ -1,4 +1,3 @@
-
 <link href='http://fonts.googleapis.com/css?family=Signika:700' rel='stylesheet' type='text/css'>
 <div id="badge" style="  font-family: 'Signika';
   font-size: 40pt;
@@ -26,7 +25,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1188de', endColorstr='#1a5d82',GradientType=1 );
 ">V</div>
 
-A new web framework
+Vorka - A new web framework for Node.js
 
 Installation
 ---
@@ -45,4 +44,3 @@ We welcome contributions to Vorka. Here are some useful tips:
 - We use JSHint to help keep the code formatting consistent.
 - We use the test suite to ensure everything works.
 - We use our benchmarking suite to monitor the impact of changes.
-
