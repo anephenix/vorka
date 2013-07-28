@@ -1,0 +1,16 @@
+{
+  "name": "vorka",
+  "version": "0.0.0",
+  "description": "A new hybrid web/app framework",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/lib/index.js"
+  },
+  "repository": "",
+  "author": "Anephenix <https://anephenix.com>",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}
