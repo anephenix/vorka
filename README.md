@@ -1,7 +1,7 @@
 Vorka
 ===
 
-![Vorka logo](https://github.com/Anephenix/vorka/blob/master/public/images/vorka.png)
+![Vorka logo](http://anephenix.com/images/vorka.png)
 
 A new web framework for Node.js
 
