@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
+    "cover": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha test/*",
     "lint": "jshint .",
+    "notes":"node_modules/.bin/notes .",
     "test": "NODE_ENV=test mocha test/**/*"
   },
   "repository": "",
@@ -16,7 +18,9 @@
   "readmeFilename": "README.md",
   "dependencies": {},
   "devDependencies": {
+    "istanbul": "^0.3.17",
     "jshint": "^2.8.0",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "notes": "0.0.4"
   }
 }
