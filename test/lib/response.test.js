@@ -43,6 +43,16 @@ describe('response()', function () {
 
 		});
 
+		it('should handle passing stringified JSON data straight away', function (done) {
+
+			res.json(200, '{"name":"Paul Jensen"}');
+			assert.equal(200, res.statusCode);
+			assert.deepEqual({'Content-Type': 'application/json'}, res.headers);
+			assert.deepEqual(JSON.stringify({name: 'Paul Jensen'}), res.content);
+			done();
+
+		});
+
 	});
 
 

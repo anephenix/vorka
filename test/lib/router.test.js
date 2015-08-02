@@ -9,22 +9,6 @@ var router = require('../../lib/router');
 
 describe('router', function () {
 
-	describe('#handler', function () {
-
-		describe('when the route is matched', function () {
-
-			it('should execute the route');
-
-		});
-
-		describe('when the route is not matched', function () {
-
-			it('should return a response notifying the user that the route was not found');
-
-		});
-
-	});
-
 	describe('#routes', function () {
 
 		it('should return the list of all the HTTP methods and the routes associated with them', function (done) {
@@ -40,6 +24,47 @@ describe('router', function () {
 
 			assert.deepEqual(routes, router.routes);
 			done();
+
+		});
+
+	});
+
+	describe('#handler', function () {
+
+		describe('when the route is matched', function () {
+
+			it('should execute the route', function (done) {
+
+				var routeFunk = function () { done(); };
+				router.get('/my-test', routeFunk);
+				var mockedMethod = {method: 'GET', url: '/my-test'};
+				router.handler(mockedMethod, {});
+
+			});
+
+		});
+
+		describe('when the route is not matched', function () {
+
+			it('should return a response notifying the user that the route was not found', function (done) {
+
+				var mockedMethod 	= {method: 'GET', url: '/my-other-test'};
+				var mockedResponse 	= {statusCode: null, headers: null, content: null};
+				mockedResponse.writeHead = function (statusCode, headers) {
+					mockedResponse.statusCode 	= statusCode;
+					mockedResponse.headers 	= headers;
+				};
+				mockedResponse.end 	= function (content) { 
+					mockedResponse.content = content;
+				};
+
+				router.handler(mockedMethod, mockedResponse);
+				assert.equal(404,mockedResponse.statusCode);
+				assert.deepEqual({'Content-Type': 'text/plain'}, mockedResponse.headers);
+				assert.equal('Not Found\n', mockedResponse.content);
+				done();
+
+			});
 
 		});
 
