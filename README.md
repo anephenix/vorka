@@ -9,6 +9,7 @@ An experimental web framework for Node.js
 [![Dependency Status](https://david-dm.org/anephenix/vorka.svg)](https://david-dm.org/anephenix/vorka)
 [![devDependency Status](https://david-dm.org/anephenix/vorka/dev-status.svg)](https://david-dm.org/anephenix/vorka#info=devDependencies)
 [![Coverage Status](https://coveralls.io/repos/anephenix/vorka/badge.svg?branch=master&service=github)](https://coveralls.io/github/anephenix/vorka?branch=master)
+[![Codacy Badge](https://www.codacy.com/project/badge/db641ecf28b2425a8252d949a9b41490)](https://www.codacy.com/app/paulbjensen/vorka)
 
 Installation
 ---
