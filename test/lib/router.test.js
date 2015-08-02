@@ -3,8 +3,8 @@
 
 // Dependencies
 //
-var assert = require('assert');
-var router = require('../../lib/router');
+// var assert = require('assert');
+// var router = require('../../lib/router');
 
 
 describe('router', function () {
