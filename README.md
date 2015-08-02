@@ -8,6 +8,7 @@ An experimental web framework for Node.js
 [![Code Climate](https://codeclimate.com/github/anephenix/vorka/badges/gpa.svg)](https://codeclimate.com/github/anephenix/vorka)
 [![Dependency Status](https://david-dm.org/anephenix/vorka.svg)](https://david-dm.org/anephenix/vorka)
 [![devDependency Status](https://david-dm.org/anephenix/vorka/dev-status.svg)](https://david-dm.org/anephenix/vorka#info=devDependencies)
+[![Coverage Status](https://coveralls.io/repos/anephenix/vorka/badge.svg?branch=master&service=github)](https://coveralls.io/github/anephenix/vorka?branch=master)
 
 Installation
 ---
@@ -24,7 +25,7 @@ It's essentially a sandbox for experimentation.
 Usage
 ---
 
-Here is a simple use case:
+Here is a simple example of returning some inline HTML with a 200 status when making a GET request to /
 
 	var app = require('vorka');
 
@@ -33,6 +34,36 @@ Here is a simple use case:
 	});
 
 	app.listen(3000);
+
+Vorka supplies a simple HTTP server that is extended with some helper functions:
+
+*app.get*
+
+	// @route		String 		The route to match
+	// @callback 	Function 	The function to execute when the route and method is hit
+	//
+	app.get(route, callback);
+
+    e.g.
+
+    app.get('/app.css', function (req, res) {
+    	res.css(200, 'body { background: red; }');
+    });
+	
+*app.head*
+
+	// @route		String 		The route to match
+	// @callback 	Function 	The function to execute when the route and method is hit
+	//
+	app.head(route, callback);
+
+    e.g.
+
+    app.head('/version', function (req, res) {
+    	res.writeHeaders(200, {'Content-Length':0});
+    	res.end('');
+    });
+
 
 
 Contributing to Vorka
