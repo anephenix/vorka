@@ -37,33 +37,41 @@ Here is a simple example of returning some inline HTML with a 200 status when ma
 
 Vorka supplies a simple HTTP server that is extended with some helper functions:
 
-*app.get*
+DSL helper functions
+---
 
-	// @route		String 		The route to match
-	// @callback 	Function 	The function to execute when the route and method is hit
-	//
-	app.get(route, callback);
+#### HTTP method helper functions
+
+Similar to Sinatra in Ruby or Express in Node, we provide a simple DSL for adding routes and functions based on their HTTP method. Below is an example for a GET request for an app.css file at /app.css
 
     e.g.
 
     app.get('/app.css', function (req, res) {
     	res.css(200, 'body { background: red; }');
     });
-	
-*app.head*
 
-	// @route		String 		The route to match
-	// @callback 	Function 	The function to execute when the route and method is hit
-	//
-	app.head(route, callback);
+The same pattern exists for the following HTTP methods:
 
-    e.g.
+	- POST 		(app.post)
+	- PUT 		(app.put)
+	- PATCH		(app.patch)
+	- DELETE 	(app.delete)
+	- HEAD 		(app.head)
 
-    app.head('/version', function (req, res) {
-    	res.writeHeaders(200, {'Content-Length':0});
-    	res.end('');
-    });
+#### Response helper functions
 
+There are also HTTP response helper functions that populate the HTTP headers for common formats:
+
+	- HTML
+	- CSS
+	- JavaScript
+	- plain text
+
+e.g.
+
+	app.get('/app.js', function (req, res) {
+		res.js(200, 'alert("hi");');
+	});
 
 
 Contributing to Vorka
