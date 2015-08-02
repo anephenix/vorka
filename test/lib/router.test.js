@@ -3,8 +3,8 @@
 
 // Dependencies
 //
-// var assert = require('assert');
-// var router = require('../../lib/router');
+var assert = require('assert');
+var router = require('../../lib/router');
 
 
 describe('router', function () {
@@ -25,39 +25,101 @@ describe('router', function () {
 
 	});
 
+	describe('#routes', function () {
+
+		it('should return the list of all the HTTP methods and the routes associated with them', function (done) {
+
+			var routes = {
+			    HEAD    : {},
+			    GET     : {},
+			    POST    : {},
+			    PUT     : {},
+			    DELETE  : {},
+			    PATCH   : {}
+			};
+
+			assert.deepEqual(routes, router.routes);
+			done();
+
+		});
+
+	});
+
 	describe('#head', function () {
 
-		it('should attach a function to the route passed in');
+		it('should attach a function to the route passed in', function (done) {
+
+			var funk = function (req, res) { res.end(''); };
+			router.head('/',funk);
+			assert.deepEqual(funk, router.routes.HEAD['/']);
+			done();
+
+		});
 
 	});
 
 	describe('#get', function () {
 
-		it('should attach a function to the route passed in');
+		it('should attach a function to the route passed in', function (done) {
+
+			var funk = function (req, res) { res.end(''); };
+			router.get('/',funk);
+			assert.deepEqual(funk, router.routes.GET['/']);
+			done();
+
+		});
 
 	});
 
 	describe('#post', function () {
 
-		it('should attach a function to the route passed in');
+		it('should attach a function to the route passed in', function (done) {
+
+			var funk = function (req, res) { res.end(''); };
+			router.post('/',funk);
+			assert.deepEqual(funk, router.routes.POST['/']);
+			done();
+
+		});
 
 	});
 
 	describe('#put', function () {
 
-		it('should attach a function to the route passed in');
+		it('should attach a function to the route passed in', function (done) {
+
+			var funk = function (req, res) { res.end(''); };
+			router.put('/',funk);
+			assert.deepEqual(funk, router.routes.PUT['/']);
+			done();
+
+		});
 
 	});
 
 	describe('#delete', function () {
 
-		it('should attach a function to the route passed in');
+		it('should attach a function to the route passed in', function (done) {
+
+			var funk = function (req, res) { res.end(''); };
+			router.delete('/',funk);
+			assert.deepEqual(funk, router.routes.DELETE['/']);
+			done();
+
+		});
 
 	});
 
 	describe('#patch', function () {
 
-		it('should attach a function to the route passed in');
+		it('should attach a function to the route passed in', function (done) {
+
+			var funk = function (req, res) { res.end(''); };
+			router.patch('/',funk);
+			assert.deepEqual(funk, router.routes.PATCH['/']);
+			done();
+
+		});
 
 	});
 
