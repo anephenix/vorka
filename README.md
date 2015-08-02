@@ -1,9 +1,7 @@
 Vorka
 ===
 
-![Vorka logo](http://anephenix.com/images/vorka.png)
-
-A new web framework for Node.js
+An experimental web framework for Node.js
 
 Installation
 ---

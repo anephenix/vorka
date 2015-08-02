@@ -7,11 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/lib/index.js"
+    "test": "NODE_ENV=test mocha test/**/*"
   },
   "repository": "",
   "author": "Anephenix <https://anephenix.com>",
   "license": "BSD",
   "readmeFilename": "README.md",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
 }
