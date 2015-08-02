@@ -3,6 +3,8 @@ Vorka
 
 An experimental web framework for Node.js
 
+[![Build Status](https://travis-ci.org/anephenix/vorka.svg?branch=master)](https://travis-ci.org/anephenix/vorka)
+
 Installation
 ---
 
