@@ -3,6 +3,7 @@ Vorka
 
 An experimental web framework for Node.js
 
+[![npm version](https://badge.fury.io/js/vorka.svg)](http://badge.fury.io/js/vorka)
 [![Build Status](https://travis-ci.org/anephenix/vorka.svg?branch=master)](https://travis-ci.org/anephenix/vorka)
 [![Code Climate](https://codeclimate.com/github/anephenix/vorka/badges/gpa.svg)](https://codeclimate.com/github/anephenix/vorka)
 [![Dependency Status](https://david-dm.org/anephenix/vorka.svg)](https://david-dm.org/anephenix/vorka)
