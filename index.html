@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Vorka by anephenix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Vorka</h1>
+      <h2 class="project-tagline">An experimental web framework for Node.js</h2>
+      <a href="https://github.com/anephenix/vorka" class="btn">View on GitHub</a>
+      <a href="https://github.com/anephenix/vorka/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/anephenix/vorka/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="vorka" class="anchor" href="#vorka" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vorka</h1>
+
+<p>An experimental web framework for Node.js</p>
+
+<p><a href="http://badge.fury.io/js/vorka"><img src="https://badge.fury.io/js/vorka.svg" alt="npm version"></a>
+<a href="https://travis-ci.org/anephenix/vorka"><img src="https://travis-ci.org/anephenix/vorka.svg?branch=master" alt="Build Status"></a>
+<a href="https://codeclimate.com/github/anephenix/vorka"><img src="https://codeclimate.com/github/anephenix/vorka/badges/gpa.svg" alt="Code Climate"></a>
+<a href="https://david-dm.org/anephenix/vorka"><img src="https://david-dm.org/anephenix/vorka.svg" alt="Dependency Status"></a>
+<a href="https://david-dm.org/anephenix/vorka#info=devDependencies"><img src="https://david-dm.org/anephenix/vorka/dev-status.svg" alt="devDependency Status"></a>
+<a href="https://coveralls.io/github/anephenix/vorka?branch=master"><img src="https://coveralls.io/repos/anephenix/vorka/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a>
+<a href="https://www.codacy.com/app/paulbjensen/vorka"><img src="https://www.codacy.com/project/badge/db641ecf28b2425a8252d949a9b41490" alt="Codacy Badge"></a></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>npm install vorka
+</code></pre>
+
+<h2>
+<a id="why-vorka" class="anchor" href="#why-vorka" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why Vorka?</h2>
+
+<p>Vorka was a fresh look at how HTTP works in Node.js, and an attempt at building a small DSL around it to support simple sites. I noticed in rudimentary benchmarking tests that a Node.js HTTP server's bootup time compared to Connect/ExpressJS was significantly faster (57ms vs 120ms on a 2010 MacBook Air 11"). I explored this concept a bit more, and came up with a project, which is named after the song "Vorka" by the Hidden Orchestra.</p>
+
+<p>It's essentially a sandbox for experimentation.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Here is a simple example of returning some inline HTML with a 200 status when making a GET request to /</p>
+
+<pre><code>var app = require('vorka');
+
+app.get('/', function (req, res) {
+    res.html(200, '&lt;html&gt;&lt;head&gt;&lt;title&gt;Sample HTML&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Hello&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;');
+});
+
+app.listen(3000);
+</code></pre>
+
+<p>Vorka supplies a simple HTTP server that is extended with some helper functions:</p>
+
+<h2>
+<a id="dsl-helper-functions" class="anchor" href="#dsl-helper-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>DSL helper functions</h2>
+
+<h4>
+<a id="http-method-helper-functions" class="anchor" href="#http-method-helper-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTTP method helper functions</h4>
+
+<p>Similar to Sinatra in Ruby or Express in Node, we provide a simple DSL for adding routes and functions based on their HTTP method. Below is an example for a GET request for an app.css file at /app.css</p>
+
+<pre><code>e.g.
+
+app.get('/app.css', function (req, res) {
+    res.css(200, 'body { background: red; }');
+});
+</code></pre>
+
+<p>The same pattern exists for the following HTTP methods:</p>
+
+<pre><code>- POST      (app.post)
+- PUT       (app.put)
+- PATCH     (app.patch)
+- DELETE    (app.delete)
+- HEAD      (app.head)
+</code></pre>
+
+<h4>
+<a id="response-helper-functions" class="anchor" href="#response-helper-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Response helper functions</h4>
+
+<p>There are also HTTP response helper functions that populate the HTTP headers for common formats:</p>
+
+<pre><code>- HTML
+- CSS
+- JavaScript
+- plain text
+</code></pre>
+
+<p>e.g.</p>
+
+<pre><code>app.get('/app.js', function (req, res) {
+    res.js(200, 'alert("hi");');
+});
+</code></pre>
+
+<h2>
+<a id="contributing-to-vorka" class="anchor" href="#contributing-to-vorka" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing to Vorka</h2>
+
+<p>We welcome contributions to Vorka. Here are some useful tips:</p>
+
+<ul>
+<li>We use JSHint to help keep the code formatting consistent</li>
+<li>We write and run tests using Mocha</li>
+<li>We currently benchmark manually, but will be bringing in a benchmarking suite soon</li>
+</ul>
+
+<h2>
+<a id="licence-and-rights" class="anchor" href="#licence-and-rights" aria-hidden="true"><span class="octicon octicon-link"></span></a>Licence and rights</h2>
+
+<p>© 2015 Anephenix Ltd. Vorka is licenced under the MIT license. - See LICENSE for details.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/anephenix/vorka">Vorka</a> is maintained by <a href="https://github.com/anephenix">anephenix</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
