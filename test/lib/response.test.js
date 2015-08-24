@@ -37,7 +37,7 @@ describe('response()', function () {
 
 			res.json(200, {name: 'Paul Jensen'});
 			assert.equal(200, res.statusCode);
-			assert.deepEqual({'Content-Type': 'application/json'}, res.headers);
+			assert.deepEqual({'Content-Type': 'application/json', 'Content-Length': 22}, res.headers);
 			assert.deepEqual(JSON.stringify({name: 'Paul Jensen'}), res.content);
 			done();
 
@@ -47,7 +47,7 @@ describe('response()', function () {
 
 			res.json(200, '{"name":"Paul Jensen"}');
 			assert.equal(200, res.statusCode);
-			assert.deepEqual({'Content-Type': 'application/json'}, res.headers);
+			assert.deepEqual({'Content-Type': 'application/json', 'Content-Length': 22}, res.headers);
 			assert.deepEqual(JSON.stringify({name: 'Paul Jensen'}), res.content);
 			done();
 
@@ -64,7 +64,7 @@ describe('response()', function () {
 			var htmlContent = '<html><head><title>Hello world</title></head><body><h1>Hello everyone!</h1></body></html>';
 			res.html(200, htmlContent);
 			assert.equal(200, res.statusCode);
-			assert.deepEqual({'Content-Type': 'text/html'}, res.headers);
+			assert.deepEqual({'Content-Type': 'text/html', 'Content-Length': 89}, res.headers);
 			assert.deepEqual(htmlContent, res.content);
 			done();
 
@@ -81,7 +81,7 @@ describe('response()', function () {
 			var textContent = 'Not found';
 			res.text(404, textContent);
 			assert.equal(404, res.statusCode);
-			assert.deepEqual({'Content-Type': 'text/plain'}, res.headers);
+			assert.deepEqual({'Content-Type': 'text/plain', 'Content-Length': 9}, res.headers);
 			assert.deepEqual(textContent, res.content);
 			done();
 
@@ -98,7 +98,7 @@ describe('response()', function () {
 			var cssContent = 'body {background: red;}';
 			res.css(200, cssContent);
 			assert.equal(200, res.statusCode);
-			assert.deepEqual({'Content-Type': 'text/css'}, res.headers);
+			assert.deepEqual({'Content-Type': 'text/css', 'Content-Length': 23}, res.headers);
 			assert.deepEqual(cssContent, res.content);
 			done();
 
@@ -115,7 +115,7 @@ describe('response()', function () {
 			var jsContent = 'alert("hi");';
 			res.js(200, jsContent);
 			assert.equal(200, res.statusCode);
-			assert.deepEqual({'Content-Type': 'application/javascript'}, res.headers);
+			assert.deepEqual({'Content-Type': 'application/javascript', 'Content-Length': 12}, res.headers);
 			assert.deepEqual(jsContent, res.content);
 			done();
 
