@@ -69,6 +69,32 @@ describe('router', function () {
 
 		});
 
+        describe('when a route with dynamic variables is matched', function () {
+
+         	it('should execute the route', function (done) {
+
+				var routeFunk = function (req) {
+					// assert.equal(req.params.username, 'paulbjensen');
+					done(); 
+				};
+				router.get('/users/:username', routeFunk);
+				var mockedMethod = {method: 'GET', url: '/users/paulbjensen'};
+				var mockedResponse 	= {statusCode: null, headers: null, content: null};
+				mockedResponse.writeHead = function (statusCode, headers) {
+					mockedResponse.statusCode 	= statusCode;
+					mockedResponse.headers 	= headers;
+				};
+				mockedResponse.end 	= function (content) { 
+					mockedResponse.content = content;
+				};
+				router.handler(mockedMethod, mockedResponse);
+
+				// TODO - also check that parameters are parsed and populated on the request object
+
+         	});
+
+        });
+
 	});
 
 	describe('#head', function () {
