@@ -71,10 +71,10 @@ describe('router', function () {
 
         describe('when a route with dynamic variables is matched', function () {
 
-         	it('should execute the route', function (done) {
+         	it('should execute the route, and populate the req.params object with the matching parameters', function (done) {
 
 				var routeFunk = function (req) {
-					// assert.equal(req.params.username, 'paulbjensen');
+					assert.equal(req.params.username, 'paulbjensen');
 					done(); 
 				};
 				router.get('/users/:username', routeFunk);
