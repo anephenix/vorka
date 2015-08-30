@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>router.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="response.html">
+                  response.js
+                </a>
+              
+                
+                <a class="source" href="router.html">
+                  router.js
+                </a>
+              
+                
+                <a class="source" href="server.html">
+                  server.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>router.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Dependencies</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> url                 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+<span class="hljs-keyword">var</span> responseHandlers    = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./response'</span>);
+<span class="hljs-keyword">var</span> _                   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Used to store all of the pathnames, sorted by HTTP method</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> routes = {
+    HEAD    : {},
+    GET     : {},
+    POST    : {},
+    PUT     : {},
+    DELETE  : {},
+    PATCH   : {}
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Used to store dynamic routes, sorted by HTTP method,
+and match based on routes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> dynamicRoutes = {
+    HEAD    : {},
+    GET     : {},
+    POST    : {},
+    PUT     : {},
+    DELETE  : {},
+    PATCH   : {}    
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Handles pathnames that don’t have a function bound to them</p>
+<p>@param   (res)   {Object}    The http response object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleNotFound</span> (<span class="hljs-params">res</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>TODO - have a way to specify a custom 404 (html/json/xml)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.writeHead(<span class="hljs-number">404</span>, {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span>});
+    res.end(<span class="hljs-string">'Not Found\n'</span>);
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Parses the http request to identify the http method and url pathname</p>
+<p>@param   (req)   {Object}    The http request object
+@return          {Object}    The parsed method and pathname of the request</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseRequest</span> (<span class="hljs-params">req</span>) </span>{
+    <span class="hljs-keyword">return</span> {method: req.method, pathname: url.parse(req.url).pathname};
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Parses the dynamic route in order to store it for reference later</p>
+<p>@param   (url)       {String}    The url
+@param   (method)    {String}    The HTTP method</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseDynamicRoute</span> (<span class="hljs-params">url, method</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Split the url into segments (based on number of items in url, and remove trailing slashes);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> splitUrl    = _.compact(url.split(<span class="hljs-string">'/'</span>));
+    <span class="hljs-keyword">if</span> (!dynamicRoutes[method][splitUrl.length]) {
+        dynamicRoutes[method][splitUrl.length] = [url];
+    } <span class="hljs-keyword">else</span> {
+        dynamicRoutes[method][splitUrl.length].push(url);
+    }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Checks if a url matches a route with parameters</p>
+<p>@param   (splitUrl)      {Array}     The url pathname turned into parts
+@param   (possibleUrl)   {String}    The possible matching url
+@return                  {Boolean}   Does the url match? </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">urlMatchesDynamicRoute</span> (<span class="hljs-params">splitUrl, possibleUrl</span>) </span>{
+    <span class="hljs-keyword">var</span> splitPossibleUrl = _.compact(possibleUrl.split(<span class="hljs-string">'/'</span>));
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;splitUrl.length;i++) {
+        <span class="hljs-keyword">if</span> (splitUrl[i] === splitPossibleUrl[i]) {
+            <span class="hljs-keyword">if</span> (i === splitUrl.length-<span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+            } 
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">if</span> (splitPossibleUrl[i].match(<span class="hljs-string">':'</span>) !== <span class="hljs-literal">null</span>) {
+                <span class="hljs-keyword">if</span> (i === splitUrl.length-<span class="hljs-number">1</span>) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                }
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+        }
+    }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Checks if a dynamic route exists for the url</p>
+<p>@param   (parsedRequest)     {Object}                The parsed request object
+@return                      {String or Boolean}     Either the matching string, or false</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dynamicRouteExists</span> (<span class="hljs-params">parsedRequest</span>) </span>{
+    <span class="hljs-keyword">var</span> splitUrl    = _.compact(parsedRequest.pathname.split(<span class="hljs-string">'/'</span>));    
+    <span class="hljs-keyword">var</span> possibleUrls = dynamicRoutes[parsedRequest.method][splitUrl.length];
+    <span class="hljs-keyword">if</span> (possibleUrls &amp;&amp; possibleUrls.length &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;possibleUrls.length;i++) {
+            <span class="hljs-keyword">var</span> possibleUrl = possibleUrls[i];
+            <span class="hljs-keyword">if</span> (urlMatchesDynamicRoute(splitUrl, possibleUrl)) {
+                <span class="hljs-keyword">return</span> possibleUrl;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">if</span> (i === possibleUrls.length -<span class="hljs-number">1</span>) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+                }
+            }
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Populates the req.params object with the parameters
+from the parsed url</p>
+<p>@param   (req)       {Object}    The http request object
+@param   (pathname)  {String}    The pathname for the request
+@param   (url)       {String}    The matched url</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">populateParamsForRequest</span> (<span class="hljs-params">req, pathname, url</span>) </span>{
+    req.params = {};
+    <span class="hljs-keyword">var</span> splitPathname   = _.compact(pathname.split(<span class="hljs-string">'/'</span>));    
+    <span class="hljs-keyword">var</span> splitUrl        = _.compact(url.split(<span class="hljs-string">'/'</span>));
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;splitUrl.length;i++) {
+        <span class="hljs-keyword">if</span> (splitUrl[i].match(<span class="hljs-string">':'</span>) !== <span class="hljs-literal">null</span>) {
+            req.params[splitUrl[i].replace(<span class="hljs-string">':'</span>,<span class="hljs-string">''</span>)] = splitPathname[i];
+        }
+    }   
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Handles all HTTP requests</p>
+<p>@param   (req)   {Object}    The http request object
+@param   (res)   {Object}    The http response object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span> (<span class="hljs-params">req, res</span>) </span>{
+    responseHandlers(res);
+    <span class="hljs-keyword">var</span> parsedRequest = parseRequest(req);
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> routes[parsedRequest.method][parsedRequest.pathname] === <span class="hljs-string">'function'</span>) {
+        routes[parsedRequest.method][parsedRequest.pathname](req,res);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">var</span> url = dynamicRouteExists(parsedRequest);
+        <span class="hljs-keyword">if</span> (url) {
+            populateParamsForRequest(req, parsedRequest.pathname, url);
+            routes[parsedRequest.method][url](req,res);
+        } <span class="hljs-keyword">else</span> {
+            handleNotFound(res);
+        }
+    } 
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>A macro function that generates a function 
+for attaching a handler to a route on a 
+given HTTP method</p>
+<p>@param   (method)    {String}        The HTTP method
+@return              {Function}      The function that attaches a function to a route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addRouteForMethod</span> (<span class="hljs-params">method</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">url, funktion</span>) </span>{
+        <span class="hljs-keyword">if</span> (url.match(<span class="hljs-string">':'</span>) !== <span class="hljs-literal">null</span>) {
+            parseDynamicRoute(url, method);
+        }
+        routes[method][url] = funktion;
+    };
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Expose a public api for the router</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = {
+    routes    : routes,
+    handler   : handler,
+    head      : addRouteForMethod(<span class="hljs-string">'HEAD'</span>),
+    get       : addRouteForMethod(<span class="hljs-string">'GET'</span>),
+    post      : addRouteForMethod(<span class="hljs-string">'POST'</span>),
+    put       : addRouteForMethod(<span class="hljs-string">'PUT'</span>),
+    <span class="hljs-keyword">delete</span>    : addRouteForMethod(<span class="hljs-string">'DELETE'</span>),     <span class="hljs-comment">// delete is a Javascript keyword</span>
+    patch     : addRouteForMethod(<span class="hljs-string">'PATCH'</span>)
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
