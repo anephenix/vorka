@@ -56,8 +56,8 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  background-color: #1188de;
+  background-image: linear-gradient(120deg, #1188de, #45ccda); }
 
 @media screen and (min-width: 64em) {
   .page-header {
@@ -112,31 +112,39 @@ a {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: normal;
-  color: #159957; }
+  color: #1188de; }
 .main-content p {
   margin-bottom: 1em; }
 .main-content code {
   padding: 2px 4px;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 0.9rem;
-  color: #383e41;
-  background-color: #f3f6fa;
+  color: #fff;
+  background-color: #222;
   border-radius: 0.3rem; }
-.main-content pre {
+.main-content pre, .page-header pre {
   padding: 0.8rem;
   margin-top: 0;
   margin-bottom: 1rem;
   font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  color: #567482;
+  color: #fff;
   word-wrap: normal;
-  background-color: #f3f6fa;
+  background-color: #0B324E;
   border: solid 1px #dce6f0;
   border-radius: 0.3rem; }
+  .page-header pre {
+    display: inline-block;
+    padding-left: 2em;
+    padding-right: 2em;
+    border: none;
+    color: #45ccda;
+  }
+
   .main-content pre > code {
     padding: 0;
     margin: 0;
     font-size: 0.9rem;
-    color: #567482;
+    color: #45ccda;
     word-break: normal;
     white-space: pre;
     background: transparent;
@@ -202,6 +210,18 @@ a {
   margin: 1rem 0;
   background-color: #eff0f1;
   border: 0; }
+
+#logo {
+  border: solid 3px white;
+  border-radius: 30em;
+  width: 2em;
+  height: 2em;
+  padding: 0.25em;
+  font-size: 48pt;
+  font-family: 'Gill Sans';
+  text-align: center;
+  display: inline-block;
+}
 
 @media screen and (min-width: 64em) {
   .main-content {
