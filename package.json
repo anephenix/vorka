@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.3",
-    "istanbul": "^0.3.17",
-    "jshint": "^2.8.0",
-    "mocha": "^2.2.5",
+    "istanbul": "^0.3.19",
+    "jshint": "^2.9.0",
+    "mocha": "^2.3.0",
     "notes": "0.0.4"
   }
 }
