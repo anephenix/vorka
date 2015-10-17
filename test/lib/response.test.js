@@ -7,16 +7,14 @@ var assert 		= require('assert');
 var response	= require('../../lib/response');
 
 
-describe('response()', function () {
-
-
+describe('response()', () => {
 
 	var res;
 
-	beforeEach(function (done) {
+	beforeEach( (done) => {
 
 		res = {
-			writeHead:  function (statusCode, headers) {
+			writeHead: function (statusCode, headers) {
 				this.statusCode = statusCode;
 				this.headers = headers;
 			},
@@ -31,9 +29,9 @@ describe('response()', function () {
 
 
 
-	describe('.json', function () {
+	describe('.json', () => {
 
-		it('should return JSON content with the appropriate headers', function (done) {
+		it('should return JSON content with the appropriate headers', (done) => {
 
 			res.json(200, {name: 'Paul Jensen'});
 			assert.equal(200, res.statusCode);
@@ -43,7 +41,7 @@ describe('response()', function () {
 
 		});
 
-		it('should handle passing stringified JSON data straight away', function (done) {
+		it('should handle passing stringified JSON data straight away', (done) => {
 
 			res.json(200, '{"name":"Paul Jensen"}');
 			assert.equal(200, res.statusCode);
@@ -57,9 +55,9 @@ describe('response()', function () {
 
 
 
-	describe('.html', function () {
+	describe('.html', () => {
 
-		it('should return html content with the appropriate headers', function (done) {
+		it('should return html content with the appropriate headers', (done) => {
 
 			var htmlContent = '<html><head><title>Hello world</title></head><body><h1>Hello everyone!</h1></body></html>';
 			res.html(200, htmlContent);
@@ -74,9 +72,9 @@ describe('response()', function () {
 
 
 
-	describe('.text', function () {
+	describe('.text', () => {
 
-		it('should return a plaintext response with the appropriate headers', function (done) {
+		it('should return a plaintext response with the appropriate headers', (done) => {
 
 			var textContent = 'Not found';
 			res.text(404, textContent);
@@ -91,9 +89,9 @@ describe('response()', function () {
 
 
 
-	describe('.css', function () {
+	describe('.css', () => {
 
-		it('should return CSS content with the appropriate headers', function (done) {
+		it('should return CSS content with the appropriate headers', (done) => {
 
 			var cssContent = 'body {background: red;}';
 			res.css(200, cssContent);
@@ -108,9 +106,9 @@ describe('response()', function () {
 
 
 
-	describe('.js', function () {
+	describe('.js', () => {
 
-		it('should return JS content with the appropriate headers', function (done) {
+		it('should return JS content with the appropriate headers', (done) => {
 
 			var jsContent = 'alert("hi");';
 			res.js(200, jsContent);

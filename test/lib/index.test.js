@@ -7,9 +7,9 @@ var assert = require('assert');
 var index  = require('../../lib/index');
 var server = require('../../lib/index');
 
-describe('index', function () {
+describe('index', () => {
 
-	it('should return the server library', function (done) {
+	it('should return the server library', (done) => {
 
 		assert.deepEqual(server, index);
 		done();

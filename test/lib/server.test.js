@@ -8,16 +8,16 @@ var router = require('../../lib/router');
 var server = require('../../lib/server');
 
 
-describe('server', function () {
+describe('server', () => {
 
-	it('should return a http server', function (done) {
+	it('should return a http server', (done) => {
 
 		assert(typeof server.listen === 'function');
 		done();
 
 	});
 
-	it('should have router functions available', function (done) {
+	it('should have router functions available', (done) => {
 
 		assert.deepEqual(router.get, server.get);
 		assert.deepEqual(router.post, server.post);
