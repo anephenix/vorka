@@ -3,8 +3,8 @@
 
 // Dependencies
 //
-var assert = require('assert');
-var router = require('../../../lib/router');
+const assert = require('assert');
+let router = require('../../../lib/router');
 
 
 describe('router', () => {
@@ -13,7 +13,7 @@ describe('router', () => {
 
 		it('should return the list of all the HTTP methods and the routes associated with them', (done) => {
 
-			var routes = {
+			let routes = {
 			    HEAD    : {},
 			    GET     : {},
 			    POST    : {},
@@ -35,9 +35,9 @@ describe('router', () => {
 
 			it('should execute the route', (done) => {
 
-				var routeFunk = () => { done(); };
+				let routeFunk = () => { done(); };
 				router.get('/my-test', routeFunk);
-				var mockedMethod = {method: 'GET', url: '/my-test'};
+				let mockedMethod = {method: 'GET', url: '/my-test'};
 				router.handler(mockedMethod, {});
 
 			});
@@ -49,8 +49,8 @@ describe('router', () => {
 
 			it('should return a response notifying the user that the route was not found', (done) => {
 
-				var mockedMethod 	= {method: 'GET', url: '/my-other-test'};
-				var mockedResponse 	= {statusCode: null, headers: null, content: null};
+				let mockedMethod 	= {method: 'GET', url: '/my-other-test'};
+				let mockedResponse 	= {statusCode: null, headers: null, content: null};
 				mockedResponse.writeHead = (statusCode, headers) => {
 					mockedResponse.statusCode 	= statusCode;
 					mockedResponse.headers 		= headers;
@@ -73,13 +73,13 @@ describe('router', () => {
 
 		 	it('should execute the route, and populate the req.params object with the matching parameters', (done) => {
 
-				var routeFunk = (req) => {
+				let routeFunk = (req) => {
 					assert.equal(req.params.username, 'paulbjensen');
 					done(); 
 				};
 				router.get('/users/:username', routeFunk);
-				var mockedMethod = {method: 'GET', url: '/users/paulbjensen'};
-				var mockedResponse 	= {statusCode: null, headers: null, content: null};
+				let mockedMethod = {method: 'GET', url: '/users/paulbjensen'};
+				let mockedResponse 	= {statusCode: null, headers: null, content: null};
 				mockedResponse.writeHead = (statusCode, headers) => {
 					mockedResponse.statusCode 	= statusCode;
 					mockedResponse.headers 	= headers;
@@ -93,13 +93,13 @@ describe('router', () => {
 
          	it('should execute the route and populate the req.params object with the matching parameters if the route parameter is inside the url', (done) => {
 
-				var routeFunk = (req) => {
+				let routeFunk = (req) => {
 					assert.equal(req.params.username, 'paulbjensen');
 					done(); 
 				};
 				router.get('/users/:username/posts/', routeFunk);
-				var mockedMethod = {method: 'GET', url: '/users/paulbjensen/posts'};
-				var mockedResponse 	= {statusCode: null, headers: null, content: null};
+				let mockedMethod = {method: 'GET', url: '/users/paulbjensen/posts'};
+				let mockedResponse 	= {statusCode: null, headers: null, content: null};
 				mockedResponse.writeHead = (statusCode, headers) => {
 					mockedResponse.statusCode 	= statusCode;
 					mockedResponse.headers 		= headers;
@@ -113,18 +113,18 @@ describe('router', () => {
 
          	it('should execute the route and populate the req.params object with the matching parameters if the route parameters are inside the url', (done) => {
 
-				var routeFunk = (req) => {
+				let routeFunk = (req) => {
 					assert.equal(req.params.username, 'paulbjensen');
 					assert.equal(req.params.id, 42);
 					done();
 				};
-				var routeFunkTwo = () => {
+				let routeFunkTwo = () => {
 					done(new Error('Should not have been triggered'));
 				};
 				router.get('/users/:username/posts/:id', routeFunk);
 				router.get('/users/:username/posts/test', routeFunkTwo);
-				var mockedMethod = {method: 'GET', url: '/users/paulbjensen/posts/42'};
-				var mockedResponse 	= {statusCode: null, headers: null, content: null};
+				let mockedMethod = {method: 'GET', url: '/users/paulbjensen/posts/42'};
+				let mockedResponse 	= {statusCode: null, headers: null, content: null};
 				mockedResponse.writeHead = (statusCode, headers) => {
 					mockedResponse.statusCode 	= statusCode;
 					mockedResponse.headers 		= headers;
@@ -142,13 +142,13 @@ describe('router', () => {
 
 			it('should return a response notifying the user that the route was not found', (done) => {
 
-				var routeFunkTwo = () => {
+				let routeFunkTwo = () => {
 					done(new Error('Should not have been triggered'));
 				};
 				router.get('/users/:username/posts/test', routeFunkTwo);
-				var mockedMethod 	= {method: 'GET', url: '/my-other-test/will/not/triger'};
+				let mockedMethod 	= {method: 'GET', url: '/my-other-test/will/not/triger'};
 
-				var mockedResponse = {statusCode: null, headers: null, content: null};
+				let mockedResponse = {statusCode: null, headers: null, content: null};
 				mockedResponse.writeHead = (statusCode, headers) => {
 					mockedResponse.statusCode = statusCode;
 					mockedResponse.headers = headers;
@@ -175,7 +175,7 @@ describe('router', () => {
 
 		it('should attach a function to the route passed in', (done) => {
 
-			var funk = (req, res) => { res.end(''); };
+			let funk = (req, res) => { res.end(''); };
 			router.head('/',funk);
 			assert.deepEqual(funk, router.routes.HEAD['/']);
 			done();
@@ -188,7 +188,7 @@ describe('router', () => {
 
 		it('should attach a function to the route passed in', (done) => {
 
-			var funk = (req, res) => { res.end(''); };
+			let funk = (req, res) => { res.end(''); };
 			router.get('/',funk);
 			assert.deepEqual(funk, router.routes.GET['/']);
 			done();
@@ -201,7 +201,7 @@ describe('router', () => {
 
 		it('should attach a function to the route passed in', (done) => {
 
-			var funk = (req, res) => { res.end(''); };
+			let funk = (req, res) => { res.end(''); };
 			router.post('/',funk);
 			assert.deepEqual(funk, router.routes.POST['/']);
 			done();
@@ -214,7 +214,7 @@ describe('router', () => {
 
 		it('should attach a function to the route passed in', (done) => {
 
-			var funk = (req, res) => { res.end(''); };
+			let funk = (req, res) => { res.end(''); };
 			router.put('/',funk);
 			assert.deepEqual(funk, router.routes.PUT['/']);
 			done();
@@ -227,7 +227,7 @@ describe('router', () => {
 
 		it('should attach a function to the route passed in', (done) => {
 
-			var funk = (req, res) => { res.end(''); };
+			let funk = (req, res) => { res.end(''); };
 			router.delete('/',funk);
 			assert.deepEqual(funk, router.routes.DELETE['/']);
 			done();
@@ -240,7 +240,7 @@ describe('router', () => {
 
 		it('should attach a function to the route passed in', (done) => {
 
-			var funk = (req, res) => { res.end(''); };
+			let funk = (req, res) => { res.end(''); };
 			router.patch('/',funk);
 			assert.deepEqual(funk, router.routes.PATCH['/']);
 			done();

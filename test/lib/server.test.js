@@ -3,9 +3,9 @@
 
 // Dependencies
 //
-var assert = require('assert');
-var router = require('../../lib/router');
-var server = require('../../lib/server');
+const assert = require('assert');
+const router = require('../../lib/router');
+const server = require('../../lib/server');
 
 
 describe('server', () => {

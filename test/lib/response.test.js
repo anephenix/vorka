@@ -3,23 +3,23 @@
 
 // Dependencies
 //
-var assert 		= require('assert');
-var response	= require('../../lib/response');
+const assert 	= require('assert');
+const response	= require('../../lib/response');
 
 
 describe('response()', () => {
 
-	var res;
+	let res;
 
 	beforeEach( (done) => {
 
 		res = {
-			writeHead: function (statusCode, headers) {
-				this.statusCode = statusCode;
-				this.headers = headers;
+			writeHead: (statusCode, headers) => {
+				res.statusCode = statusCode;
+				res.headers = headers;
 			},
-			end: function (content) {
-				this.content = content;
+			end: (content) => {
+				res.content = content;
 			}
 		};
 		response(res);
@@ -59,7 +59,7 @@ describe('response()', () => {
 
 		it('should return html content with the appropriate headers', (done) => {
 
-			var htmlContent = '<html><head><title>Hello world</title></head><body><h1>Hello everyone!</h1></body></html>';
+			const htmlContent = '<html><head><title>Hello world</title></head><body><h1>Hello everyone!</h1></body></html>';
 			res.html(200, htmlContent);
 			assert.equal(200, res.statusCode);
 			assert.deepEqual({'Content-Type': 'text/html', 'Content-Length': 89}, res.headers);
@@ -76,7 +76,7 @@ describe('response()', () => {
 
 		it('should return a plaintext response with the appropriate headers', (done) => {
 
-			var textContent = 'Not found';
+			const textContent = 'Not found';
 			res.text(404, textContent);
 			assert.equal(404, res.statusCode);
 			assert.deepEqual({'Content-Type': 'text/plain', 'Content-Length': 9}, res.headers);
@@ -93,7 +93,7 @@ describe('response()', () => {
 
 		it('should return CSS content with the appropriate headers', (done) => {
 
-			var cssContent = 'body {background: red;}';
+			const cssContent = 'body {background: red;}';
 			res.css(200, cssContent);
 			assert.equal(200, res.statusCode);
 			assert.deepEqual({'Content-Type': 'text/css', 'Content-Length': 23}, res.headers);
@@ -110,7 +110,7 @@ describe('response()', () => {
 
 		it('should return JS content with the appropriate headers', (done) => {
 
-			var jsContent = 'alert("hi");';
+			const jsContent = 'alert("hi");';
 			res.js(200, jsContent);
 			assert.equal(200, res.statusCode);
 			assert.deepEqual({'Content-Type': 'application/javascript', 'Content-Length': 12}, res.headers);

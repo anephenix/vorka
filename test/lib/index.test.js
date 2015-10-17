@@ -3,9 +3,9 @@
 
 // Dependencies
 //
-var assert = require('assert');
-var index  = require('../../lib/index');
-var server = require('../../lib/index');
+const assert = require('assert');
+const index  = require('../../lib/index');
+const server = require('../../lib/index');
 
 describe('index', () => {
 
