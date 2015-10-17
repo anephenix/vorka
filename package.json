@@ -13,7 +13,7 @@
     "notes": "node_modules/.bin/notes .",
     "test": "NODE_ENV=test mocha test/**/*"
   },
-  "repository": "",
+  "repository": "https://github.com/anephenix/vorka",
   "author": "Anephenix <https://anephenix.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -21,10 +21,10 @@
     "lodash": "^3.10.1"
   },
   "devDependencies": {
-    "coveralls": "^2.11.3",
-    "istanbul": "^0.3.19",
+    "coveralls": "^2.11.4",
+    "istanbul": "^0.4.0",
     "jshint": "^2.8.0",
-    "mocha": "^2.3.0",
+    "mocha": "^2.3.3",
     "notes": "0.0.4"
   }
 }
