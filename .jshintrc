@@ -2,6 +2,7 @@
   "eqeqeq": true,
   "indent": 4,
   "node": true,
+  "esnext": true,
   "predef": [
     "__dirname",
     "after",
