@@ -55,7 +55,7 @@ describe('router', () => {
 					mockedResponse.statusCode 	= statusCode;
 					mockedResponse.headers 		= headers;
 				};
-				mockedResponse.end 	= (content) => { 
+				mockedResponse.end 	= (content) => {
 					mockedResponse.content = content;
 				};
 
@@ -75,7 +75,7 @@ describe('router', () => {
 
 				let routeFunk = (req) => {
 					assert.equal(req.params.username, 'paulbjensen');
-					done(); 
+					done();
 				};
 				router.get('/users/:username', routeFunk);
 				let mockedMethod = {method: 'GET', url: '/users/paulbjensen'};
@@ -84,7 +84,7 @@ describe('router', () => {
 					mockedResponse.statusCode 	= statusCode;
 					mockedResponse.headers 	= headers;
 				};
-				mockedResponse.end = (content) => { 
+				mockedResponse.end = (content) => {
 					mockedResponse.content = content;
 				};
 				router.handler(mockedMethod, mockedResponse);
@@ -93,21 +93,21 @@ describe('router', () => {
 
          	it('should execute the route and populate the req.params object with the matching parameters if the route parameter is inside the url', (done) => {
 
-				let routeFunk = (req) => {
-					assert.equal(req.params.username, 'paulbjensen');
-					done(); 
-				};
-				router.get('/users/:username/posts/', routeFunk);
-				let mockedMethod = {method: 'GET', url: '/users/paulbjensen/posts'};
-				let mockedResponse 	= {statusCode: null, headers: null, content: null};
-				mockedResponse.writeHead = (statusCode, headers) => {
-					mockedResponse.statusCode 	= statusCode;
-					mockedResponse.headers 		= headers;
-				};
-				mockedResponse.end = (content) => { 
-					mockedResponse.content = content;
-				};
-				router.handler(mockedMethod, mockedResponse);
+						let routeFunk = (req) => {
+							assert.equal(req.params.username, 'paulbjensen');
+							done();
+						};
+						router.get('/users/:username/posts/', routeFunk);
+						let mockedMethod = {method: 'GET', url: '/users/paulbjensen/posts'};
+						let mockedResponse 	= {statusCode: null, headers: null, content: null};
+						mockedResponse.writeHead = (statusCode, headers) => {
+							mockedResponse.statusCode 	= statusCode;
+							mockedResponse.headers 		= headers;
+						};
+						mockedResponse.end = (content) => {
+							mockedResponse.content = content;
+						};
+						router.handler(mockedMethod, mockedResponse);
 
          	});
 
@@ -129,7 +129,7 @@ describe('router', () => {
 					mockedResponse.statusCode 	= statusCode;
 					mockedResponse.headers 		= headers;
 				};
-				mockedResponse.end =  (content) => { 
+				mockedResponse.end =  (content) => {
 					mockedResponse.content = content;
 				};
 				router.handler(mockedMethod, mockedResponse);
@@ -153,7 +153,7 @@ describe('router', () => {
 					mockedResponse.statusCode = statusCode;
 					mockedResponse.headers = headers;
 				};
-				mockedResponse.end = (content) => { 
+				mockedResponse.end = (content) => {
 					mockedResponse.content = content;
 				};
 
