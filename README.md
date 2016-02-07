@@ -87,4 +87,4 @@ We welcome contributions to Vorka. Here are some useful tips:
 Licence and rights
 ---
 
-&copy; 2015 Anephenix Ltd. Vorka is licenced under the MIT license. - See LICENSE for details.
+&copy; 2016 Anephenix Ltd. Vorka is licenced under the MIT license. - See LICENSE for details.
