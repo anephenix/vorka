@@ -28,9 +28,9 @@ Usage
 
 Here is a simple example of returning some inline HTML with a 200 status when making a GET request to /
 
-	var app = require('vorka');
+	const app = require('vorka');
 
-	app.get('/', function (req, res) {
+	app.get('/', (req, res) => {
 		res.html(200, '<html><head><title>Sample HTML</title></head><body><h1>Hello</h1></body></html>');
 	});
 
@@ -47,7 +47,7 @@ Similar to Sinatra in Ruby or Express in Node, we provide a simple DSL for addin
 
     e.g.
 
-    app.get('/app.css', function (req, res) {
+    app.get('/app.css', (req, res) => {
     	res.css(200, 'body { background: red; }');
     });
 
@@ -70,7 +70,7 @@ There are also HTTP response helper functions that populate the HTTP headers for
 
 e.g.
 
-	app.get('/app.js', function (req, res) {
+	app.get('/app.js', (req, res) => {
 		res.js(200, 'alert("hi");');
 	});
 
