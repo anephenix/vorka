@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>server.js</title>
+  <title>static.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -20,16 +20,6 @@
             <div id="jump_page">
               
                 
-                <a class="source" href="index.html">
-                  index.js
-                </a>
-              
-                
-                <a class="source" href="response.html">
-                  response.js
-                </a>
-              
-                
                 <a class="source" href="dynamic.html">
                   dynamic.js
                 </a>
@@ -44,11 +34,6 @@
                   static.js
                 </a>
               
-                
-                <a class="source" href="server.html">
-                  server.js
-                </a>
-              
             </div>
           </div>
         </li>
@@ -58,7 +43,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>server.js</h1>
+                  <h1>static.js</h1>
               </div>
           </li>
         
@@ -84,12 +69,18 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Load dependencies/modules</p>
+              <p>Used to store all of the pathnames, sorted by HTTP method</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> http        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
-<span class="hljs-keyword">const</span> router      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./router'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> routes = {
+    HEAD    : {},
+    GET     : {},
+    POST    : {},
+    PUT     : {},
+    DELETE  : {},
+    PATCH   : {}
+};</pre></div></div>
             
         </li>
         
@@ -100,42 +91,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Load the http server</p>
+              <p>Expose the public API</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> server      = http.createServer(router.handler);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Alias router’s route functions to the http server</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>[<span class="hljs-string">'get'</span>,<span class="hljs-string">'post'</span>,<span class="hljs-string">'put'</span>,<span class="hljs-string">'delete'</span>,<span class="hljs-string">'patch'</span>,<span class="hljs-string">'head'</span>]
-.forEach( method =&gt; server[method] = router[method] );</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>Expose the http server as the API</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports  = server;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = {routes};</pre></div></div>
             
         </li>
         

@@ -20,23 +20,18 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="dynamic.html">
+                  dynamic.js
+                </a>
+              
+                
                 <a class="source" href="index.html">
                   index.js
                 </a>
               
                 
-                <a class="source" href="response.html">
-                  response.js
-                </a>
-              
-                
-                <a class="source" href="router.html">
-                  router.js
-                </a>
-              
-                
-                <a class="source" href="server.html">
-                  server.js
+                <a class="source" href="static.html">
+                  static.js
                 </a>
               
             </div>
@@ -63,7 +58,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">'use strict'</span>;</pre></div></div>
             
         </li>
         
@@ -74,11 +69,144 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Expose the server as the public API</p>
+              <p>// Dependencies
+//</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./server'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> url                 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+<span class="hljs-keyword">const</span> staticRouter        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./static'</span>);
+<span class="hljs-keyword">const</span> dynamicRouter       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./dynamic'</span>);
+<span class="hljs-keyword">const</span> responseHandlers    = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../response'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Handles pathnames that don’t have a function bound to them</p>
+<p>@param   (res)   {Object}    The http response object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleNotFound</span> (<span class="hljs-params">res</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>TODO - have a way to specify a custom 404 (html/json/xml)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.writeHead(<span class="hljs-number">404</span>, {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span>});
+    res.end(<span class="hljs-string">'Not Found\n'</span>);
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Parses the http request to identify the http method and url pathname</p>
+<p>@param   (req)   {Object}    The http request object
+@return          {Object}    The parsed method and pathname of the request</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseRequest</span> (<span class="hljs-params">req</span>) </span>{
+    <span class="hljs-keyword">return</span> {method: req.method, pathname: url.parse(req.url).pathname};
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Handles all HTTP requests</p>
+<p>@param   (req)   {Object}    The http request object
+@param   (res)   {Object}    The http response object</p>
+<p>TODO - simplify the logic of this function - it’s too coupled</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span> (<span class="hljs-params">req, res</span>) </span>{
+    responseHandlers(res);
+    <span class="hljs-keyword">const</span> parsedRequest = parseRequest(req);
+    <span class="hljs-keyword">const</span> methodRoutes = staticRouter.routes[parsedRequest.method];
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> methodRoutes[parsedRequest.pathname] === <span class="hljs-string">'function'</span>) {
+        methodRoutes[parsedRequest.pathname](req,res);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">const</span> matchedUrl = dynamicRouter.routeExists(parsedRequest);
+        <span class="hljs-keyword">if</span> (matchedUrl) {
+            dynamicRouter.populateParamsForRequest(
+              req,
+              parsedRequest.pathname, matchedUrl
+            );
+            methodRoutes[matchedUrl](req,res);
+        } <span class="hljs-keyword">else</span> {
+            handleNotFound(res);
+        }
+    }
+}
+
+
+<span class="hljs-comment">/**
+   A macro function that generates a function for attaching a handler to a
+   route on a given HTTP method
+
+   @param   (method)    {String}        The HTTP method
+   @return              {Function}      The function that attaches a function to a route
+*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addRouteForMethod</span> (<span class="hljs-params">method</span>) </span>{
+    <span class="hljs-keyword">return</span> (passedUrl, funktion) =&gt; {
+        <span class="hljs-keyword">if</span> (passedUrl.indexOf(<span class="hljs-string">':'</span>) &gt; <span class="hljs-number">-1</span>) {
+            dynamicRouter.parseRoute(passedUrl, method);
+        }
+        staticRouter.routes[method][passedUrl] = funktion;
+    };
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Expose a public api for the router</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = {
+    routes    : staticRouter.routes,
+    handler   : handler,
+    head      : addRouteForMethod(<span class="hljs-string">'HEAD'</span>),
+    get       : addRouteForMethod(<span class="hljs-string">'GET'</span>),
+    post      : addRouteForMethod(<span class="hljs-string">'POST'</span>),
+    put       : addRouteForMethod(<span class="hljs-string">'PUT'</span>),
+    <span class="hljs-keyword">delete</span>    : addRouteForMethod(<span class="hljs-string">'DELETE'</span>), <span class="hljs-comment">// delete is a Javascript keyword</span>
+    patch     : addRouteForMethod(<span class="hljs-string">'PATCH'</span>)
+};</pre></div></div>
             
         </li>
         

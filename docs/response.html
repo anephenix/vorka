@@ -30,8 +30,18 @@
                 </a>
               
                 
-                <a class="source" href="router.html">
-                  router.js
+                <a class="source" href="dynamic.html">
+                  dynamic.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="static.html">
+                  static.js
                 </a>
               
                 
@@ -63,7 +73,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">'use strict'</span>;</pre></div></div>
             
         </li>
         
@@ -78,15 +88,18 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* 
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
     @param   res             {Object}        The HTTP response object
     @param   contentType     {String}        The content type header
     @return                  {Function}      The response helper function
 */</span>
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateResponseHelper</span> (<span class="hljs-params">res, contentType</span>) </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">statusCode, body</span>) </span>{
-        res.writeHead(statusCode, {<span class="hljs-string">'Content-Type'</span>: contentType, <span class="hljs-string">'Content-Length'</span>: body.length });
-        res.end(body);        
+    <span class="hljs-keyword">return</span> (statusCode, body) =&gt; {
+        res.writeHead(
+          statusCode,
+          {<span class="hljs-string">'Content-Type'</span>: contentType, <span class="hljs-string">'Content-Length'</span>: body.length }
+        );
+        res.end(body);
     };
 }</pre></div></div>
             
@@ -103,8 +116,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/*
-    @param res  {Object}  The HTTP response object  
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
+    @param res  {Object}  The HTTP response object
 */</span>
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">responseHelpers</span> (<span class="hljs-params">res</span>) </span>{</pre></div></div>
             
@@ -125,19 +138,19 @@
         @param statusCode      {Number}                      The status code to return
         @param body            {Object|Number|Array|String}  The data to encode to JSON
     */</span>
-    res.json = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">statusCode, body</span>) </span>{
+    res.json = (statusCode, body) =&gt; {
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> body !== <span class="hljs-string">'string'</span>) {body = <span class="hljs-built_in">JSON</span>.stringify(body);}
-        res.writeHead(statusCode, {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>, <span class="hljs-string">'Content-Length'</span>: body.length });
+        res.writeHead(
+          statusCode,
+          {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>, <span class="hljs-string">'Content-Length'</span>: body.length }
+        );
         res.end(body);
     };
 
-    res.html = generateResponseHelper(res, <span class="hljs-string">'text/html'</span>);
-
-    res.text = generateResponseHelper(res, <span class="hljs-string">'text/plain'</span>);
-
-    res.css = generateResponseHelper(res, <span class="hljs-string">'text/css'</span>);
-
-    res.js = generateResponseHelper(res, <span class="hljs-string">'application/javascript'</span>);
+    res.html    = generateResponseHelper(res, <span class="hljs-string">'text/html'</span>);
+    res.text    = generateResponseHelper(res, <span class="hljs-string">'text/plain'</span>);
+    res.css     = generateResponseHelper(res, <span class="hljs-string">'text/css'</span>);
+    res.js      = generateResponseHelper(res, <span class="hljs-string">'application/javascript'</span>);
 
 }</pre></div></div>
             
