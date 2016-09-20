@@ -7,13 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "cover": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha test/**/*",
-    "coveralls": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha test/**/* && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-		"docs": "open docs/index.html",
-		"generate-docs": "node_modules/.bin/docco lib/**/*.js",
+    "cover": "npm run test-env && istanbul cover _mocha test/**/*.js",
+    "coveralls": "npm run test-env && istanbul cover node_modules/.bin/_mocha test/**/* && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "docs": "open docs/index.html",
+    "generate-docs": "docco lib/**/*.js",
     "lint": "jshint .",
-    "notes": "node_modules/.bin/notes .",
-    "test": "NODE_ENV=test mocha test/**/*"
+    "notes": "notes .",
+    "test": "npm run test-env && mocha test/**/*.js",
+    "test-env": "cross-env NODE_ENV=test"
   },
   "repository": "https://github.com/anephenix/vorka",
   "author": "Anephenix <https://anephenix.com>",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.13",
+    "cross-env": "^2.0.1",
     "docco": "^0.7.0",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.3",
