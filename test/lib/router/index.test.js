@@ -168,8 +168,43 @@ describe('router', () => {
 			});
 
 
-        });
+    });
 
+	});
+
+	describe('#handleExtensionNotHandled', () => {});
+
+	describe('#parseFilePath', () => {
+
+		describe('when the file does not exist', () => {
+
+			it('should attach a file not found handler');
+
+		});
+
+		describe('when the file extension is not handled', () => {
+
+			it('should attach a file extension not handled handler', (done) => {
+
+				const extension = '.d';
+				let mockedResponse = {statusCode: null, headers: null, content: null};
+				mockedResponse.writeHead = (statusCode, headers) => {
+					mockedResponse.statusCode = statusCode;
+					mockedResponse.headers = headers;
+				};
+				mockedResponse.end = (content) => {
+					mockedResponse.content = content;
+				};
+				router.handleExtensionNotHandled(extension, mockedResponse);
+				assert.equal(500,mockedResponse.statusCode);
+				assert.deepEqual({'Content-Type': 'text/plain'}, mockedResponse.headers);
+				assert.equal('File extension .d is not currently handled by the server\n', mockedResponse.content);
+				done();
+			});
+
+		});
+
+		it('should return a handler for the file based on the file extension');
 
 	});
 
