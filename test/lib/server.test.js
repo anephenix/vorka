@@ -4,7 +4,6 @@
 // Dependencies
 //
 const assert = require('assert');
-const router = require('../../lib/router');
 const server = require('../../lib/server');
 
 
@@ -19,7 +18,7 @@ describe('server', () => {
 
 	it('should have router functions available', (done) => {
 
-		const check = i => assert.deepEqual(router[i], server[i]);
+		const check = i => assert(typeof server[i] === 'function');
 		['get', 'post', 'put', 'delete', 'patch', 'head'].map(check);
 		done();
 

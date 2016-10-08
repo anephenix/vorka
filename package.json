@@ -6,8 +6,8 @@
   "directories": {
     "test": "test"
   },
-	"pre-commit": [
-		"lint",
+  "pre-commit": [
+    "lint",
     "test"
   ],
   "scripts": {
@@ -25,6 +25,7 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
+    "cross-env": "^3.1.1",
     "lodash": "^4.15.0",
     "pre-commit": "^1.1.3"
   },

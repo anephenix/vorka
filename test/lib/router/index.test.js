@@ -36,6 +36,8 @@ describe('router', () => {
 			it('should execute the route', (done) => {
 
 				let routeFunk = () => { done(); };
+
+				router.get = router.attachMethodToServer('GET', {});
 				router.get('/my-test', routeFunk);
 				let mockedMethod = {method: 'GET', url: '/my-test'};
 				router.handler(mockedMethod, {});
@@ -168,84 +170,6 @@ describe('router', () => {
 
         });
 
-
-	});
-
-	describe('#head', () => {
-
-		it('should attach a function to the route passed in', (done) => {
-
-			let funk = (req, res) => { res.end(''); };
-			router.head('/',funk);
-			assert.deepEqual(funk, router.routes.HEAD['/']);
-			done();
-
-		});
-
-	});
-
-	describe('#get', () => {
-
-		it('should attach a function to the route passed in', (done) => {
-
-			let funk = (req, res) => { res.end(''); };
-			router.get('/',funk);
-			assert.deepEqual(funk, router.routes.GET['/']);
-			done();
-
-		});
-
-	});
-
-	describe('#post', () => {
-
-		it('should attach a function to the route passed in', (done) => {
-
-			let funk = (req, res) => { res.end(''); };
-			router.post('/',funk);
-			assert.deepEqual(funk, router.routes.POST['/']);
-			done();
-
-		});
-
-	});
-
-	describe('#put', () => {
-
-		it('should attach a function to the route passed in', (done) => {
-
-			let funk = (req, res) => { res.end(''); };
-			router.put('/',funk);
-			assert.deepEqual(funk, router.routes.PUT['/']);
-			done();
-
-		});
-
-	});
-
-	describe('#delete', () => {
-
-		it('should attach a function to the route passed in', (done) => {
-
-			let funk = (req, res) => { res.end(''); };
-			router.delete('/',funk);
-			assert.deepEqual(funk, router.routes.DELETE['/']);
-			done();
-
-		});
-
-	});
-
-	describe('#patch', () => {
-
-		it('should attach a function to the route passed in', (done) => {
-
-			let funk = (req, res) => { res.end(''); };
-			router.patch('/',funk);
-			assert.deepEqual(funk, router.routes.PATCH['/']);
-			done();
-
-		});
 
 	});
 
